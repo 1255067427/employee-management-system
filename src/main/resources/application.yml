@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  # 连接池配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/employee-management-system?useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    auto-mapping-behavior: full
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+  type-aliases-package: com.employee.entity #设置别名
+
+#OSS配置
+aliyun:
+  oss:
+    file:
+      # 控制台 - oss - 点击对应桶 - 概览 - 地域节点
+      endpoint: oss-cn-chengdu.aliyuncs.com
+      keyid: LTAI5tRymGLddfUPWXRa8vmB
+      keysecret: oUmtAgsC7iSczdj6jiDPJmm8wIEnYT
+      bucketname: store-b2c20221123

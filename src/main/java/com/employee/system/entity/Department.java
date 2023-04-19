@@ -8,22 +8,17 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author bluesky
- * @create 2023-04-17-23:20
+ * @create 2023-04-19-21:40
  */
 @Data
-public class Employee {
+public class Department {
 
     @TableId()
     private Long id;
 
     @NotNull
-    private String employeeName;
+    private String departmentName;
 
-    @NotNull
-    private Long departmentId;
-
-    private String salary;
-
-    @NotNull
-    private Integer age;
+    private
+    Integer total;
 }

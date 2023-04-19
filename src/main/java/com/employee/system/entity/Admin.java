@@ -1,5 +1,6 @@
 package com.employee.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -12,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class Admin {
 
-    @TableId
+    @TableId()
     private Long id;
 
     @NotNull

@@ -18,6 +18,9 @@ mybatis-plus:
     lazy-loading-enabled: true
     aggressive-lazy-loading: false
   type-aliases-package: com.employee.entity #设置别名
+  global-config:
+    db-config:
+      id-type: auto
 
 #OSS配置
 aliyun:

@@ -1,8 +1,10 @@
 package com.employee.system.controller;
 
+import com.employee.system.Param.DepartmentEditParam;
 import com.employee.system.Param.PageParam;
+import com.employee.system.entity.Department;
 import com.employee.system.entity.Employee;
-import com.employee.system.service.EmployeeService;
+import com.employee.system.service.DepartmentService;
 import com.employee.system.utils.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -15,71 +17,70 @@ import java.util.List;
 
 /**
  * @author bluesky
- * @create 2023-04-17-23:24
+ * @create 2023-04-19-21:41
  */
 @RestController
-@RequestMapping("/employee")
-public class EmployeeController {
+@RequestMapping("/department")
+public class DepartmentController {
 
     @Autowired
-    private EmployeeService employeeService;
+    private DepartmentService departmentService;
 
     /**
-     * 分页查询员工列表
-     *
+     * 分页查询部门列表
      * @param pageParam
      * @return
      */
     @PostMapping("/list")
     public R list(@RequestBody PageParam pageParam) {
 
-        List<Employee> list = employeeService.list(pageParam);
+        List<Department> list = departmentService.list(pageParam);
 
         return R.ok(list);
     }
 
     /**
-     * 新增员工
+     * 新增部门
      *
-     * @param employee
+     * @param department
      * @param bindingResult
      * @return
      */
     @PostMapping("add")
-    public R add(@RequestBody Employee employee, BindingResult bindingResult) {
+    public R add(@RequestBody Department department, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
 
             return R.fail("添加失败，参数错误！");
         }
 
-        int result = employeeService.add(employee);
+        int result = departmentService.add(department);
 
         return R.ok(result);
     }
 
     /**
-     * 编辑员工
+     * 编辑部门
      *
-     * @param employee
+     * @param departmentEditParam
      * @param bindingResult
      * @return
      */
     @PostMapping("edit")
-    public R edit(@RequestBody Employee employee, BindingResult bindingResult) {
+    public R edit(@RequestBody DepartmentEditParam departmentEditParam, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
 
             return R.fail("编辑失败，参数错误！");
         }
 
-        int result = employeeService.edit(employee);
+        int result = departmentService.edit(departmentEditParam);
 
         return R.ok(result);
 
     }
 
     /**
-     * 删除员工
+     * 删除部门
      * @param id
      * @param bindingResult
      * @return
@@ -91,7 +92,7 @@ public class EmployeeController {
             return R.fail("删除失败，参数错误！");
         }
 
-        int result = employeeService.delete(id);
+        int result = departmentService.delete(id);
 
         return R.ok(result);
     }

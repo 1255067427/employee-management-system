@@ -2,7 +2,6 @@ package com.employee.system.Param;
 
 import lombok.Data;
 
-import javax.validation.constraints.NotNull;
 
 /**
  * @author bluesky
@@ -11,9 +10,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class PageParam {
 
-    @NotNull
-    private Integer pageNum;
+    private Integer pageNum = 1;
 
-    @NotNull
-    private Integer pageSize;
+    private Integer pageSize = 15;
 }

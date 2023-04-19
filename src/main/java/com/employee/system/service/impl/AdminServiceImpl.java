@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author bluesky
  * @create 2023-03-17-23:31
@@ -23,6 +25,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 校验Admin参数是否合法
+     *
      * @param registerParam
      * @return
      */
@@ -94,7 +97,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Admin login(Admin adminEntity) {
+    public Admin login(HttpServletRequest request, Admin adminEntity) {
 
         // 加密密码
         String password = MD5Util.encode(adminEntity.getAdminPassword());
@@ -108,6 +111,8 @@ public class AdminServiceImpl implements AdminService {
             log.info("AdminServiceImpl.login业务结束，结果: {}", "登录失败，用户名密码错误！");
             return null;
         }
+
+        request.getSession().setAttribute("id", admin.getId());
 
         log.info("AdminServiceImpl.login业务结束，结果: {}", "登录成功！");
         return admin;

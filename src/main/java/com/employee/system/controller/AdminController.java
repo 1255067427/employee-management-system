@@ -36,7 +36,7 @@ public class AdminController {
 
         if (bindingResult.hasErrors()) {
 
-            return R.fail("注册失败！参数错误！");
+            return R.fail("注册失败，参数错误！");
         }
 
         Boolean register = adminService.register(registerParam);
@@ -50,38 +50,41 @@ public class AdminController {
 
     /**
      * 登录
-     * @param admin
+     *
+     * @param request
+     * @param adminEntity
      * @param bindingResult
      * @return
      */
     @PostMapping("/login")
-    public R login(HttpServletRequest request, @RequestBody Admin admin, BindingResult bindingResult){
+    public R login(HttpServletRequest request, @RequestBody Admin adminEntity, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
 
-            return R.fail("登录失败！参数错误！");
+            return R.fail("登录失败，参数错误！");
         }
 
-        Admin admin1 = adminService.login(admin);
-        if (admin==null) {
+        Admin admin = adminService.login(request, adminEntity);
+        if (admin == null) {
 
             return R.fail("登录失败！");
         }
 
-        return R.ok("登陆成功！",admin1);
+        return R.ok("登录成功！",admin.getId());
     }
 
+    /**
+     * 退出登录
+     *
+     * @param request
+     * @return
+     */
     @PostMapping("/logout")
-    public R logout(@RequestBody Long id,BindingResult bindingResult){
+    public R logout(HttpServletRequest request) {
 
-        if (bindingResult.hasErrors()) {
+        request.getSession().removeAttribute("id");
 
-            return R.fail("登录失败！参数错误！");
-        }
-
-
-
-        return R.ok();
+        return R.ok("退出成功");
     }
 
 }

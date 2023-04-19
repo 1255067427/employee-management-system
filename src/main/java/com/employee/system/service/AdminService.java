@@ -3,6 +3,8 @@ package com.employee.system.service;
 import com.employee.system.Param.RegisterParam;
 import com.employee.system.entity.Admin;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author bluesky
  * @create 2023-03-17-23:30
@@ -22,5 +24,5 @@ public interface AdminService {
      * @param admin
      * @return
      */
-    Admin login(Admin admin);
+    Admin login(HttpServletRequest request, Admin admin);
 }

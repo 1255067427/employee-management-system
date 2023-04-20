@@ -1,7 +1,9 @@
 package com.employee.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.employee.system.Param.DepartmentEditParam;
 import com.employee.system.Param.PageParam;
+import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Department;
 
 import java.util.List;
@@ -14,10 +16,10 @@ public interface DepartmentService {
 
     /**
      * 分页查询部门列表
-     * @param pageParam
+     * @param searchParam
      * @return
      */
-    List<Department> list(PageParam pageParam);
+    IPage<Department> list(SearchParam searchParam);
 
     /**
      * 新增部门
@@ -39,4 +41,5 @@ public interface DepartmentService {
      * @return
      */
     int delete(Long id);
+
 }

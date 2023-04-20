@@ -1,6 +1,10 @@
 package com.employee.system.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.employee.system.Param.EmployeeEditParam;
 import com.employee.system.Param.PageParam;
+import com.employee.system.Param.SearchParam;
+import com.employee.system.entity.Department;
 import com.employee.system.entity.Employee;
 import com.employee.system.service.EmployeeService;
 import com.employee.system.utils.R;
@@ -27,13 +31,13 @@ public class EmployeeController {
     /**
      * 分页查询员工列表
      *
-     * @param pageParam
+     * @param searchParam
      * @return
      */
     @PostMapping("/list")
-    public R list(@RequestBody PageParam pageParam) {
+    public R list(@RequestBody SearchParam searchParam) {
 
-        List<Employee> list = employeeService.list(pageParam);
+        IPage<Employee> list = employeeService.list(searchParam);
 
         return R.ok(list);
     }
@@ -61,25 +65,25 @@ public class EmployeeController {
     /**
      * 编辑员工
      *
-     * @param employee
+     * @param employeeEditParam
      * @param bindingResult
      * @return
      */
     @PostMapping("edit")
-    public R edit(@RequestBody Employee employee, BindingResult bindingResult) {
+    public R edit(@RequestBody EmployeeEditParam employeeEditParam, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
 
             return R.fail("编辑失败，参数错误！");
         }
 
-        int result = employeeService.edit(employee);
+        int result = employeeService.edit(employeeEditParam);
 
         return R.ok(result);
-
     }
 
     /**
      * 删除员工
+     *
      * @param id
      * @param bindingResult
      * @return

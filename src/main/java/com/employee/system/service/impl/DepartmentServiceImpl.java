@@ -5,14 +5,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employee.system.Param.DepartmentEditParam;
 import com.employee.system.Param.PageParam;
+import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Department;
+import com.employee.system.entity.Salary;
 import com.employee.system.mapper.DepartmentMapper;
+import com.employee.system.mapper.SalaryMapper;
 import com.employee.system.service.DepartmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author bluesky
@@ -28,18 +29,22 @@ public class DepartmentServiceImpl implements DepartmentService {
     /**
      * 分页查询部门列表
      *
-     * @param pageParam
+     * @param searchParam
      * @return
      */
     @Override
-    public List<Department> list(PageParam pageParam) {
+    public IPage<Department> list(SearchParam searchParam) {
 
-        IPage<Department> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        IPage<Department> page = new Page<>(searchParam.getPageNum(), searchParam.getPageSize());
         QueryWrapper<Department> queryWrapper = new QueryWrapper<>();
-        List<Department> departmentList = departmentMapper.selectPage(page, queryWrapper).getRecords();
+
+        if (searchParam.getName().trim() != null || !searchParam.getName().isEmpty()) {
+            queryWrapper.like("department_name", searchParam.getName().trim());
+        }
+        IPage<Department> departmentIPage = departmentMapper.selectPage(page, queryWrapper);
 
         log.info("DepartmentServiceImpl.list业务结束，结果: {}", "部门列表获取成功！");
-        return departmentList;
+        return departmentIPage;
 
     }
 
@@ -95,4 +100,5 @@ public class DepartmentServiceImpl implements DepartmentService {
         log.info("DepartmentServiceImpl.delete业务结束，结果: {}", "删除部门成功！");
         return result;
     }
+
 }

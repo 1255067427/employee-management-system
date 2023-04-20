@@ -1,7 +1,9 @@
 package com.employee.system.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.employee.system.Param.DepartmentEditParam;
 import com.employee.system.Param.PageParam;
+import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Department;
 import com.employee.system.entity.Employee;
 import com.employee.system.service.DepartmentService;
@@ -28,13 +30,14 @@ public class DepartmentController {
 
     /**
      * 分页查询部门列表
-     * @param pageParam
+     *
+     * @param searchParam
      * @return
      */
     @PostMapping("/list")
-    public R list(@RequestBody PageParam pageParam) {
+    public R list(@RequestBody SearchParam searchParam) {
 
-        List<Department> list = departmentService.list(pageParam);
+        IPage<Department> list = departmentService.list(searchParam);
 
         return R.ok(list);
     }
@@ -81,6 +84,7 @@ public class DepartmentController {
 
     /**
      * 删除部门
+     *
      * @param id
      * @param bindingResult
      * @return

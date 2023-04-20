@@ -1,6 +1,9 @@
 package com.employee.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.employee.system.Param.EmployeeEditParam;
 import com.employee.system.Param.PageParam;
+import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Employee;
 
 import java.util.List;
@@ -13,10 +16,10 @@ public interface EmployeeService {
 
     /**
      * 分页查询员工列表
-     * @param pageParam
+     * @param searchParam
      * @return
      */
-    List<Employee> list(PageParam pageParam);
+    IPage<Employee> list(SearchParam searchParam);
 
     /**
      * 新增员工
@@ -27,10 +30,10 @@ public interface EmployeeService {
 
     /**
      * 编辑员工
-     * @param employee
+     * @param employeeEditParam
      * @return
      */
-    int edit(Employee employee);
+    int edit(EmployeeEditParam employeeEditParam);
 
     /**
      * 删除员工

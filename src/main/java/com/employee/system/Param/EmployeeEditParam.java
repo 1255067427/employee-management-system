@@ -1,19 +1,17 @@
-package com.employee.system.entity;
+package com.employee.system.Param;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
 /**
  * @author bluesky
- * @create 2023-04-17-23:20
+ * @create 2023-04-21-0:15
  */
 @Data
-public class Employee {
+public class EmployeeEditParam {
 
-    @TableId()
+    @NotNull
     private Long id;
 
     @NotNull
@@ -24,7 +22,4 @@ public class Employee {
 
     @NotNull
     private Long departmentId;
-
-    private String salary;
-
 }

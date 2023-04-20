@@ -1,6 +1,5 @@
 package com.employee.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -8,10 +7,10 @@ import javax.validation.constraints.NotNull;
 
 /**
  * @author bluesky
- * @create 2023-04-17-23:20
+ * @create 2023-04-20-22:22
  */
 @Data
-public class Employee {
+public class Salary {
 
     @TableId()
     private Long id;
@@ -20,11 +19,20 @@ public class Employee {
     private String employeeName;
 
     @NotNull
-    private Integer age;
-
-    @NotNull
-    private Long departmentId;
-
     private String salary;
 
+    @NotNull
+    private Long employeeId;
+
+    @NotNull
+    private String basicSalary;
+
+    @NotNull
+    private String bonus;
+
+    private String subsidy;
+
+    private String overtimeWages;
+
+    private String dockWages;
 }

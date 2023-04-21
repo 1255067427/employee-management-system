@@ -4,16 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employee.system.Param.DepartmentEditParam;
-import com.employee.system.Param.PageParam;
 import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Department;
-import com.employee.system.entity.Salary;
 import com.employee.system.mapper.DepartmentMapper;
-import com.employee.system.mapper.SalaryMapper;
 import com.employee.system.service.DepartmentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author bluesky
@@ -99,6 +98,19 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         log.info("DepartmentServiceImpl.delete业务结束，结果: {}", "删除部门成功！");
         return result;
+    }
+
+    /**
+     * 获取所有部门
+     * @return
+     */
+    @Override
+    public List<Department> depList() {
+
+        List<Department> departmentList = departmentMapper.selectList(null);
+
+        log.info("DepartmentServiceImpl.depList业务结束，结果: {}","获取所有部门成功！");
+        return departmentList;
     }
 
 }

@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         IPage<Employee> departmentIPage = employeeMapper.selectPage(page, queryWrapper);
 
-        log.info("DepartmentServiceImpl.list业务结束，结果: {}", "部门列表获取成功！");
+        log.info("EmployeeServiceImpl.list业务结束，结果: {}","员工列表获取成功！");
         return departmentIPage;
     }
 

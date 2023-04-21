@@ -42,4 +42,9 @@ public interface DepartmentService {
      */
     int delete(Long id);
 
+    /**
+     * 获取所有部门
+     * @return
+     */
+    List<Department> depList();
 }

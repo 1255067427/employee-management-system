@@ -100,4 +100,12 @@ public class DepartmentController {
 
         return R.ok(result);
     }
+
+    @PostMapping("/depList")
+    public R depList() {
+
+        List<Department> list = departmentService.depList();
+
+        return R.ok(list);
+    }
 }

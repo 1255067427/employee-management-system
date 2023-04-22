@@ -3,6 +3,7 @@ package com.employee.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.employee.system.Param.SalaryEditParam;
 import com.employee.system.Param.SearchParam;
+import com.employee.system.entity.Department;
 import com.employee.system.entity.Salary;
 
 /**
@@ -25,4 +26,11 @@ public interface SalaryService {
      */
     int edit(SalaryEditParam salaryEditParam);
 
+    /**
+     * 回显
+     *
+     * @param id
+     * @return
+     */
+    Salary back(Long id);
 }

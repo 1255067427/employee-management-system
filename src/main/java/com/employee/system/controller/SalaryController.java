@@ -3,6 +3,7 @@ package com.employee.system.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.employee.system.Param.SalaryEditParam;
 import com.employee.system.Param.SearchParam;
+import com.employee.system.entity.Department;
 import com.employee.system.entity.Salary;
 import com.employee.system.service.SalaryService;
 import com.employee.system.utils.R;
@@ -51,4 +52,22 @@ public class SalaryController {
         return R.ok(result);
     }
 
+    /**
+     * 回显
+     *
+     * @param id
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/back")
+    public R back(@RequestBody Long id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+            return R.fail("删除失败，参数错误！");
+        }
+
+        Salary salary = salaryService.back(id);
+
+        return R.ok(salary);
+    }
 }

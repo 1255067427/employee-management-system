@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employee.system.Param.EmployeeEditParam;
-import com.employee.system.Param.PageParam;
+import com.employee.system.vo.EmployeeListVo;
 import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Department;
 import com.employee.system.entity.Employee;
 import com.employee.system.entity.Salary;
+import com.employee.system.mapper.DepartmentMapper;
 import com.employee.system.mapper.EmployeeMapper;
 import com.employee.system.mapper.SalaryMapper;
 import com.employee.system.service.EmployeeService;
@@ -17,6 +18,7 @@ import org.apache.ibatis.annotations.Options;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +35,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private SalaryMapper salaryMapper;
 
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
     /**
      * 分页查询员工列表
      *
@@ -40,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
      * @return
      */
     @Override
-    public IPage<Employee> list(SearchParam searchParam) {
+    public List<EmployeeListVo> list(SearchParam searchParam) {
 
         IPage<Employee> page = new Page<>(searchParam.getPageNum(), searchParam.getPageSize());
         QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
@@ -48,10 +53,32 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (searchParam.getName().trim() != null || !searchParam.getName().isEmpty()) {
             queryWrapper.like("employee_name", searchParam.getName().trim());
         }
-        IPage<Employee> departmentIPage = employeeMapper.selectPage(page, queryWrapper);
+        IPage<Employee> employeeIPage = employeeMapper.selectPage(page, queryWrapper);
 
-        log.info("EmployeeServiceImpl.list业务结束，结果: {}","员工列表获取成功！");
-        return departmentIPage;
+        List<Employee> employeeList = employeeIPage.getRecords();
+        List<Long> ids = new ArrayList<>();
+        employeeList.forEach(employee -> {
+            ids.add(employee.getDepartmentId());
+        });
+
+        List<Department> departmentList = departmentMapper.selectBatchIds(ids);
+        List<EmployeeListVo> listVos = new ArrayList<>();
+
+        for (Employee employee : employeeList) {
+            EmployeeListVo employeeListVo = new EmployeeListVo();
+            employeeListVo.setId(employee.getId());
+            employeeListVo.setEmployeeName(employee.getEmployeeName());
+            employeeListVo.setAge(employee.getAge());
+            employeeListVo.setSalary(employee.getSalary());
+
+            Department department = departmentList.stream().filter(item -> item.getId().equals(employee.getDepartmentId())).findFirst().get();
+            employeeListVo.setDepartmentName(department.getDepartmentName());
+
+            listVos.add(employeeListVo);
+        }
+
+        log.info("EmployeeServiceImpl.list业务结束，结果: {}", "员工列表获取成功！");
+        return listVos;
     }
 
     /**
@@ -119,5 +146,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         log.info("EmployeeServiceImpl.delete业务结束，结果: {}", "删除员工成功！");
         return result;
+    }
+
+    /**
+     * 回显
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee back(Long id) {
+
+        QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id",id);
+        Employee employee = employeeMapper.selectOne(queryWrapper);
+
+        log.info("EmployeeServiceImpl.back业务结束，结果: {}","回显员工信息成功！");
+        return employee;
     }
 }

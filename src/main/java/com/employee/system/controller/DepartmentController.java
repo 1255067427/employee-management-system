@@ -101,11 +101,35 @@ public class DepartmentController {
         return R.ok(result);
     }
 
+    /**
+     * 获取所有部门
+     *
+     * @return
+     */
     @PostMapping("/depList")
     public R depList() {
 
         List<Department> list = departmentService.depList();
 
         return R.ok(list);
+    }
+
+    /**
+     * 回显
+     *
+     * @param id
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/back")
+    public R back(@RequestBody Long id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+            return R.fail("删除失败，参数错误！");
+        }
+
+        Department department = departmentService.back(id);
+
+        return R.ok(department);
     }
 }

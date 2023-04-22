@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employee.system.Param.DepartmentEditParam;
 import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Department;
+import com.employee.system.entity.Employee;
 import com.employee.system.mapper.DepartmentMapper;
 import com.employee.system.service.DepartmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -102,6 +103,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     /**
      * 获取所有部门
+     *
      * @return
      */
     @Override
@@ -109,8 +111,24 @@ public class DepartmentServiceImpl implements DepartmentService {
 
         List<Department> departmentList = departmentMapper.selectList(null);
 
-        log.info("DepartmentServiceImpl.depList业务结束，结果: {}","获取所有部门成功！");
+        log.info("DepartmentServiceImpl.depList业务结束，结果: {}", "获取所有部门成功！");
         return departmentList;
     }
 
+    /**
+     * 回显
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Department back(Long id) {
+
+        QueryWrapper<Department> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        Department department = departmentMapper.selectOne(queryWrapper);
+
+        log.info("DepartmentServiceImpl.back业务结束，结果: {}","回显部门信息成功！");
+        return department;
+    }
 }

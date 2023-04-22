@@ -2,7 +2,7 @@ package com.employee.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.employee.system.Param.EmployeeEditParam;
-import com.employee.system.Param.PageParam;
+import com.employee.system.vo.EmployeeListVo;
 import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Employee;
 
@@ -19,7 +19,7 @@ public interface EmployeeService {
      * @param searchParam
      * @return
      */
-    IPage<Employee> list(SearchParam searchParam);
+    List<EmployeeListVo> list(SearchParam searchParam);
 
     /**
      * 新增员工
@@ -41,4 +41,11 @@ public interface EmployeeService {
      * @return
      */
     int delete(Long id);
+
+    /**
+     * 回显
+     * @param id
+     * @return
+     */
+    Employee back(Long id);
 }

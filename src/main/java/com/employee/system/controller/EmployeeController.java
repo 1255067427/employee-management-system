@@ -2,9 +2,8 @@ package com.employee.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.employee.system.Param.EmployeeEditParam;
-import com.employee.system.Param.PageParam;
+import com.employee.system.vo.EmployeeListVo;
 import com.employee.system.Param.SearchParam;
-import com.employee.system.entity.Department;
 import com.employee.system.entity.Employee;
 import com.employee.system.service.EmployeeService;
 import com.employee.system.utils.R;
@@ -37,7 +36,7 @@ public class EmployeeController {
     @PostMapping("/list")
     public R list(@RequestBody SearchParam searchParam) {
 
-        IPage<Employee> list = employeeService.list(searchParam);
+        List<EmployeeListVo> list = employeeService.list(searchParam);
 
         return R.ok(list);
     }
@@ -98,5 +97,24 @@ public class EmployeeController {
         int result = employeeService.delete(id);
 
         return R.ok(result);
+    }
+
+    /**
+     * 回显
+     *
+     * @param id
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/back")
+    public R back(@RequestBody Long id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+            return R.fail("删除失败，参数错误！");
+        }
+
+        Employee employee = employeeService.back(id);
+
+        return R.ok(employee);
     }
 }

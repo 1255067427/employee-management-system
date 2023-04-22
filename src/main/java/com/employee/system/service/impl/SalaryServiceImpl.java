@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employee.system.Param.SalaryEditParam;
 import com.employee.system.Param.SearchParam;
+import com.employee.system.entity.Department;
 import com.employee.system.entity.Employee;
 import com.employee.system.entity.Salary;
 import com.employee.system.mapper.EmployeeMapper;
@@ -58,7 +59,7 @@ public class SalaryServiceImpl implements SalaryService {
      * @return
      */
     @Override
-    @Options(useGeneratedKeys = true,keyProperty = "id")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     public int edit(SalaryEditParam salaryEditParam) {
 
         // 1.修改工资表
@@ -87,4 +88,20 @@ public class SalaryServiceImpl implements SalaryService {
         return result;
     }
 
+    /**
+     * 回显
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Salary back(Long id) {
+
+        QueryWrapper<Salary> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("id", id);
+        Salary salary = salaryMapper.selectOne(queryWrapper);
+
+        log.info("SalaryServiceImpl.back业务结束，结果: {}","回显工资信息成功！");
+        return salary;
+    }
 }

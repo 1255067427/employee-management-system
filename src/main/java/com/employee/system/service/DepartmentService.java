@@ -5,6 +5,7 @@ import com.employee.system.Param.DepartmentEditParam;
 import com.employee.system.Param.PageParam;
 import com.employee.system.Param.SearchParam;
 import com.employee.system.entity.Department;
+import com.employee.system.entity.Employee;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public interface DepartmentService {
 
     /**
      * 分页查询部门列表
+     *
      * @param searchParam
      * @return
      */
@@ -23,6 +25,7 @@ public interface DepartmentService {
 
     /**
      * 新增部门
+     *
      * @param department
      * @return
      */
@@ -30,6 +33,7 @@ public interface DepartmentService {
 
     /**
      * 编辑部门
+     *
      * @param departmentEditParam
      * @return
      */
@@ -37,6 +41,7 @@ public interface DepartmentService {
 
     /**
      * 删除部门
+     *
      * @param id
      * @return
      */
@@ -44,7 +49,16 @@ public interface DepartmentService {
 
     /**
      * 获取所有部门
+     *
      * @return
      */
     List<Department> depList();
+
+    /**
+     * 回显
+     *
+     * @param id
+     * @return
+     */
+    Department back(Long id);
 }

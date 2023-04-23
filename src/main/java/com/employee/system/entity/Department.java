@@ -18,6 +18,5 @@ public class Department {
     @NotNull
     private String departmentName;
 
-    private
-    Integer total;
+    private Long total;
 }

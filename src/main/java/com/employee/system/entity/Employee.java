@@ -27,4 +27,6 @@ public class Employee {
 
     private String salary;
 
+    @NotNull
+    private Long salaryId;
 }

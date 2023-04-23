@@ -70,7 +70,7 @@ public class AdminController {
             return R.fail("登录失败！");
         }
 
-        return R.ok("登录成功！",admin.getId());
+        return R.ok("登录成功！", admin);
     }
 
     /**

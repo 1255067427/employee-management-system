@@ -48,4 +48,10 @@ public interface EmployeeService {
      * @return
      */
     Employee back(Long id);
+
+    /**
+     * 获取当前departmentId
+     * @return
+     */
+    Long getDepId(Long id);
 }

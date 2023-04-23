@@ -24,5 +24,7 @@ public class EmployeeListVo {
     @NotNull
     private String departmentName;
 
+    private Long departmentId;
+
     private String salary;
 }

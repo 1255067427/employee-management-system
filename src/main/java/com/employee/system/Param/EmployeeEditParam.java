@@ -21,5 +21,9 @@ public class EmployeeEditParam {
     private Integer age;
 
     @NotNull
+    private Long departmentIdOld;
+
+    @NotNull
     private Long departmentId;
+
 }

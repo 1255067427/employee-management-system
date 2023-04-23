@@ -61,6 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
             ids.add(employee.getDepartmentId());
         });
 
+        if (ids.size() == 0) {
+            return null;
+        }
         List<Department> departmentList = departmentMapper.selectBatchIds(ids);
         List<EmployeeListVo> listVos = new ArrayList<>();
 
@@ -70,6 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employeeListVo.setEmployeeName(employee.getEmployeeName());
             employeeListVo.setAge(employee.getAge());
             employeeListVo.setSalary(employee.getSalary());
+            employeeListVo.setDepartmentId(employee.getDepartmentId());
 
             Department department = departmentList.stream().filter(item -> item.getId().equals(employee.getDepartmentId())).findFirst().get();
             employeeListVo.setDepartmentName(department.getDepartmentName());
@@ -101,6 +105,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         salary.setEmployeeId(employee.getId());
         int result = salaryMapper.insert(salary);
 
+        employee.setSalaryId(salary.getId());
+        employeeMapper.updateById(employee);
+
+        // 3.新增部门人数
+        Department department = departmentMapper.selectById(employee.getDepartmentId());
+        Long total = department.getTotal();
+        total++;
+        department.setTotal(total);
+        departmentMapper.updateById(department);
+
         log.info("EmployeeServiceImpl.add业务结束，结果: {}", "新增工资成功！");
         return result;
     }
@@ -114,6 +128,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public int edit(EmployeeEditParam employeeEditParam) {
 
+        // 1.修改employee员工信息
         QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", employeeEditParam.getId());
 
@@ -124,6 +139,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         one.setAge(employeeEditParam.getAge());
 
         int result = employeeMapper.updateById(one);
+
+        // 2.修改Salary员工姓名
+        Salary salary = salaryMapper.selectById(one.getSalaryId());
+        salary.setEmployeeName(one.getEmployeeName());
+        salaryMapper.updateById(salary);
+
+        // 4.删除旧部门人数
+        Department departmentOld = departmentMapper.selectById(employeeEditParam.getDepartmentIdOld());
+        Long totalOld = departmentOld.getTotal();
+        totalOld--;
+        departmentOld.setTotal(totalOld);
+        departmentMapper.updateById(departmentOld);
+
+        // 5.新增新部门人数
+        Department departmentNew = departmentMapper.selectById(one.getDepartmentId());
+        Long totalNew = departmentNew.getTotal();
+        totalNew++;
+        departmentNew.setTotal(totalNew);
+        departmentMapper.updateById(departmentNew);
 
         log.info("EmployeeServiceImpl.edit业务结束，结果: {}", "编辑员工成功！");
         return result;
@@ -150,6 +184,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 回显
+     *
      * @param id
      * @return
      */
@@ -157,10 +192,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee back(Long id) {
 
         QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("id",id);
+        queryWrapper.eq("id", id);
         Employee employee = employeeMapper.selectOne(queryWrapper);
 
-        log.info("EmployeeServiceImpl.back业务结束，结果: {}","回显员工信息成功！");
+        log.info("EmployeeServiceImpl.back业务结束，结果: {}", "回显员工信息成功！");
         return employee;
     }
+
+    /**
+     * 获取当前departmentId
+     *
+     * @return
+     */
+    @Override
+    public Long getDepId(Long id) {
+
+        Employee employee = employeeMapper.selectById(id);
+        Long departmentId = employee.getDepartmentId();
+
+        return departmentId;
+    }
+
+
 }

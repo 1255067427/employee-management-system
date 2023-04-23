@@ -110,11 +110,30 @@ public class EmployeeController {
     public R back(@RequestBody Long id, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
 
-            return R.fail("删除失败，参数错误！");
+            return R.fail("回显失败，参数错误！");
         }
 
         Employee employee = employeeService.back(id);
 
         return R.ok(employee);
+    }
+
+    /**
+     * 获取当前departmentId
+     *
+     * @param id
+     * @param bindingResult
+     * @return
+     */
+    @PostMapping("/departmentId")
+    public R departmentId(@RequestBody Long id, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+
+            return R.fail("获取depId失败，参数错误！");
+        }
+
+        Long depId = employeeService.getDepId(id);
+
+        return R.ok(depId);
     }
 }

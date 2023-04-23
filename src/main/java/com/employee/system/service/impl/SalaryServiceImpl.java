@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.employee.system.Param.SalaryEditParam;
 import com.employee.system.Param.SearchParam;
-import com.employee.system.entity.Department;
 import com.employee.system.entity.Employee;
 import com.employee.system.entity.Salary;
 import com.employee.system.mapper.EmployeeMapper;
@@ -68,7 +67,12 @@ public class SalaryServiceImpl implements SalaryService {
 
         Salary one = salaryMapper.selectOne(queryWrapper);
 
-        one.setSalary(salaryEditParam.getSalary());
+        int salary=Integer.parseInt(salaryEditParam.getBasicSalary())+Integer.parseInt(salaryEditParam.getBonus())+
+                Integer.parseInt(salaryEditParam.getSubsidy())+Integer.parseInt(salaryEditParam.getOvertimeWages())-
+                Integer.parseInt(salaryEditParam.getDockWages());
+
+        String salaryResult = String.valueOf(salary);
+        one.setSalary(salaryResult);
         one.setBasicSalary(salaryEditParam.getBasicSalary());
         one.setBonus(salaryEditParam.getBonus());
         one.setSubsidy(salaryEditParam.getSubsidy());

@@ -57,7 +57,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public int add(Department department) {
 
-        department.setTotal(0);
+        department.setTotal(0L);
         int result = departmentMapper.insert(department);
 
         log.info("DepartmentServiceImpl.add业务结束，结果: {}", "新增部门成功！");
